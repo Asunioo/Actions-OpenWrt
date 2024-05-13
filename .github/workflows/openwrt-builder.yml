@@ -76,7 +76,6 @@ jobs:
       run: cd openwrt && ./scripts/feeds install -a
       
     - name: Generate configuration file
-      run: make defconfig
       run: echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' >> .config; make defconfig
 
     - name: Load custom configuration
