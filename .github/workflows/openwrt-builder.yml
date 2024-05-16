@@ -49,6 +49,17 @@ jobs:
         large-packages: true
         swap-storage: true
         
+    - name: Freeing up disk space
+      uses: easimon/maximize-build-space@master
+      with: 
+        root-reserve-mb: 2048
+        swap-size-mb: 1
+        remove-dotnet: 'true'
+        remove-android: 'true'
+        remove-haskell: 'true'
+        remove-codeql: 'true'
+        remove-docker-images: 'true'
+        
     - name: Checkout
       uses: actions/checkout@main
 
@@ -77,11 +88,6 @@ jobs:
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
-        sudo mkdir -p -m 777 /mnt/openwrt/dl /mnt/openwrt/feeds 
-        ln -s /mnt/openwrt/dl /workdir/openwrt/dl
-        ln -s /mnt/openwrt/feeds /workdir/openwrt/feeds
-        # ln -s /mnt/openwrt/staging_dir ./staging_dir
-        df -h
     
     - name: Cache
       uses: stupidloud/cachewrtbuild@main
